@@ -1,0 +1,196 @@
+:root {
+    --green-dark-color: #324131;
+    --green-light-color: #739072;
+    --background-display: linear-gradient(to top, #324131 , #739072);
+    --white-color: #ffffff;
+}
+.left-side {
+    position: relative;
+    background: var(--background-display);
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+    box-shadow: 2px 0px 8px var(--green-light-color);
+    width: 16%;
+    height: 100vh;
+    left: 0px;
+    top: 0px;
+    transition: all 1s ease;
+    z-index: 1;
+}
+
+.left-side-content {
+    width: 100%;
+    color: #000000;
+    margin-left: 5px;
+}
+
+
+.left-side-content .nav {
+    margin-top: 10px;
+}
+
+.left-side-content a {
+    text-decoration: none;
+    color: var(--white-color);
+    display: block;
+    padding: 5px 24px 5px 20px;
+    width: 100%;
+}
+
+.left-side-content svg {
+    margin-right: 7px;
+    color: var(--white-color);
+    margin: 7px 0;
+    margin-left: 5px;
+}
+
+.left-side-content p {
+    padding: 10px 7px 10px 10px;
+    font-size: 1.2rem;
+    margin: 0;
+    transition: all 1s ease;
+}
+
+.choose {
+    display: flex;
+}
+.LOGO {
+    padding: 5px 15px;
+    top: 5px;
+    transition: all 0.5s ease-in;
+    width: 96%;
+}
+
+.LOGO img {
+    width:70%;
+    margin:30px 0 35px 20px;
+    cursor: pointer;
+}
+
+
+.name-page {
+    margin: 0.5rem 0 2rem 1rem;
+    position: absolute;
+    top: 0;
+    left: 99%;
+    width: 200px;
+    transition: all 1s ease;
+}
+.name-page-max {
+    margin: 0.5rem 0 2rem 1rem;
+    position: absolute;
+    top: 0;
+    /* left: 6.5rem; */
+    left: 99%;
+    width: 200px;
+    transition: all 1s ease;
+}
+
+.name-page p, .name-page-max p {
+    color: #746c6c;
+    /* background-color: #CC0000; */
+}
+
+.name-page svg, .name-page-max svg {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 5px;
+    top: 10%;
+    color: #3D70EE;
+}
+
+.name-page #page-content, .name-page-max #page-content {
+    color: #000000;
+}
+
+
+/* =================left-side-short================= */
+
+.left-side-short {
+    position: relative;
+    background: var(--background-display);
+    /* -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+    box-shadow: 2px 0px 8px var(--green-light-color);
+    width: 7%;
+    height: 100vh;
+    right: 10px;
+    top: 0px;
+    transition: all 1s ease;
+}
+.left-side-short .left-side-content .nav {
+    position: relative;
+    width: 100%;
+}
+
+.left-side-short .LOGO {
+    visibility: hidden;
+    width: 0;
+    font-size: 100%;
+    padding: 18px 15px;
+    font-family: Titillium Web;
+    top: 5px;
+    color: var(--white-color);
+    font-style: italic;
+    transition: all 0s ease;
+}
+
+
+.left-side-short .left-side-content p {
+    position: absolute;
+    visibility: hidden;
+    width: 0;
+    transition: all 0s ease;
+
+    padding: 7px 7px 7px 10px;
+    font-size: 1.2rem;
+    margin: 0;
+    align-items: center;
+}
+
+.left-side-short .left-side-content svg {
+    color: var(--white-color);
+    margin-bottom: 20px;
+    visibility: visible;
+    position: relative;
+    left: 25%;
+}
+
+
+.left-side-short .left-side-content a {
+    text-decoration: none;
+    color: var(--white-color);
+    display: block;
+    padding: 5px 10px 5px 10px;
+    width: 100%;
+}
+
+#logout {
+    padding: 10px;
+    background-color: #a65151;
+    text-align: center;
+    margin-top: 30px;
+    border-radius: 20px;
+    width: 98.6%;
+    position: relative;
+    left: -3px;
+    font-size: 1.2rem;
+}
+#logout:hover {
+    background-color: rgb(238, 43, 43);
+}
+
+.left-side-short #logout {
+    padding: 5px 2px;
+    background-color: #a65151;
+    text-align: center;
+    margin-top: 0;
+    border-radius: 20px;
+    width: 90%;
+    position: relative;
+    left: 5px;
+    font-size: 1rem;
+}
+.left-side-short #logout:hover {
+    background-color: rgb(238, 43, 43);
+}
