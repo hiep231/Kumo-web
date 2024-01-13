@@ -9,14 +9,15 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 // include 'add_product.html';
 include 'admin_leftside.php';
 $fileName = "account_admin.php";
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];
 } else {
     $page = 1;
 }
-// Check for a database connection error
+
+
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
@@ -97,7 +98,7 @@ if(isset($_POST['submit-register'])){
                             $code = rand(0000,9999);
                             $info = [$userName, $email, $code, $passwords, $isAdmin];   
                             $_SESSION['register'] = $info; 
-                            header('Location: ../email/confirm_account.php');
+                            header('Location: ../email/confirm_User.php?admin_create');
                             exit();
                         } else {
                             $registerMessage= "Địa chỉ email không kết thúc bằng @gmail.com!";
@@ -121,7 +122,7 @@ if(isset($_POST['submit-register'])){
     <!-- Use correct Bootstrap URLs -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="listed.css">
+    <link rel="stylesheet" href="../css/listed.css">
     
     <style>
         .page-<?php echo $page ?> {
@@ -133,31 +134,36 @@ if(isset($_POST['submit-register'])){
     <div class="rightside">
         <div class="container mt-3">  <!-- class="container" -->
             <!-- <a href="add-account-admin.php"><button class="btn btn-primary" id="create-admin">Tạo tài khoản</button></a> -->
-            <button class="btn btn-primary" id="create-admin" popovertarget="modal">Tạo tài khoản</button>
-            <div class="form-login-admin" id="modal" popover>
-                <div class="form-container">
-                    <!-- <a href="listed_account.php" class="dialog-close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="#888888" d="m12 12.708l-5.246 5.246q-.14.14-.344.15q-.204.01-.364-.15t-.16-.354q0-.194.16-.354L11.292 12L6.046 6.754q-.14-.14-.15-.344q-.01-.204.15-.364t.354-.16q.194 0 .354.16L12 11.292l5.246-5.246q.14-.14.344-.15q.204-.01.364.15t.16.354q0 .194-.16.354L12.708 12l5.246 5.246q.14.14.15.344q.01.204-.15.364t-.354.16q-.194 0-.354-.16L12 12.708Z"/></svg></a> -->
 
-                    <form action="" method="post" enctype="multipart/form-data">
-                        <h3>Đăng ký</h3>
-                        <?php if(!empty($registerMessage)): ?>
-                            <div><?php echo $registerMessage; ?></div>
-                        <?php endif; ?>
-                        <input type="text" name="name" required placeholder="Nhập tên">
-                        <input type="email" name="email" required placeholder="Nhập email">
-                        <input type="password" name="pass" required placeholder="Nhập mật khẩu">
-                        <input type="password" name="cpass" required placeholder="Nhập lại mật khẩu">
-                        <!-- <input type="file" name="image" class="box" required accept="image/jpg, image/jpeg, image/png"> -->
-                        <select name="user_type">
-                            <option value="user">user</option>
-                            <option value="admin">admin</option>
-                        </select>
-                        <input type="submit" name="submit-register" value="Đăng ký" class="form-btn">
-                        <!-- <p>Bạn đã có tài khoản? <a href="../login_form.php">Đăng nhập ngay</a></p> -->
-                    </form>
-
-                </div>
-            </div>
+            <button class="btn btn-primary" id="create-admin" onclick="window.location.href = 'listed_account.php?register'">Tạo tài khoản</button>
+            <?php
+                if (isset($_GET['register'])) {
+                    echo '
+                    <div class="form-login-admin" >
+                        <div class="form-container">
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <a href="listed_account.php" class="dialog-close-btn-account"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"><path fill="#888888" d="m12 12.708l-5.246 5.246q-.14.14-.344.15q-.204.01-.364-.15t-.16-.354q0-.194.16-.354L11.292 12L6.046 6.754q-.14-.14-.15-.344q-.01-.204.15-.364t.354-.16q.194 0 .354.16L12 11.292l5.246-5.246q.14-.14.344-.15q.204-.01.364.15t.16.354q0 .194-.16.354L12.708 12l5.246 5.246q.14.14.15.344q.01.204-.15.364t-.354.16q-.194 0-.354-.16L12 12.708Z"/></svg></a>
+                    
+                                <h3>Đăng ký</h3>';
+                    if (!empty($registerMessage)) {
+                        echo '<div>' . $registerMessage . '</div>';
+                    }
+                    echo '
+                                <input type="text" name="name" required placeholder="Nhập tên">
+                                <input type="email" name="email" required placeholder="Nhập email">
+                                <input type="password" name="pass" required placeholder="Nhập mật khẩu">
+                                <input type="password" name="cpass" required placeholder="Nhập lại mật khẩu">
+                                <select name="user_type">
+                                    <option value="user">user</option>
+                                    <option value="admin">admin</option>
+                                </select>
+                                <input type="submit" name="submit-register" value="Đăng ký" class="form-btn">
+                            </form>
+                        </div>
+                    </div>
+                    ';
+                }
+            ?>
             <form  id="searchForm" method="post" action="listed_account.php">
                 <input type="text" name="search" id="searchInput" value="<?php echo isset($_POST["search"]) ? $_POST["search"] : ''; ?>" placeholder="Sản phẩm">
                 <button type="submit" name="submit" onclick="submitForm()" class="search btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" style="position: relative;bottom:2px;"><path fill="#00000" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.612 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3l-1.4 1.4ZM9.5 14q1.875 0 3.188-1.313T14 9.5q0-1.875-1.313-3.188T9.5 5Q7.625 5 6.312 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14Z"/></svg></button>

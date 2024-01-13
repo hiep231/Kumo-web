@@ -24,6 +24,6 @@ if ($mysqli->query($deleteOrderItemsSQL) === TRUE) {
 }
 
 $mysqli->close();
-header("Location: " . $_SERVER['HTTP_REFERER']);
+header("Location: bill.php");
 exit();
 ?>

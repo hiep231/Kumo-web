@@ -1,12 +1,12 @@
 <?php
-require_once 'connectDB.php';
-session_start();
-if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
-    $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
-}
-$nth = 4;
-$content = "Thêm mới";
-include 'admin_leftside.php';
+    require_once '../connectDB.php';
+    session_start();
+    if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
+        $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
+    }
+    $nth = 4;
+    $content = "Thêm mới";
+    include 'admin_leftside.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -357,83 +357,84 @@ include 'admin_leftside.php';
 </body>
 </html>
 <?php
-require_once 'connectDB.php';
+    $isTrue = true;
+    $isExits = false;
 
-$isTrue = true;
-$isExits = false;
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['price'])) {
-        $price = intval($_POST['price']);
-        if ($price <= 0 || !is_numeric($_POST['price'])) {
-            echo "<div class='error'>Giá phải lớn hơn 0</div>";
-            $isTrue = false;
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST['price'])) {
+            $price = intval($_POST['price']);
+            if ($price <= 0 || !is_numeric($_POST['price'])) {
+                echo "<div class='error'>Giá phải lớn hơn 0</div>";
+                $isTrue = false;
+            }
         }
-    }
-    $brand = $_POST['brands'];
-    $nameproduct = $_POST['nameproduct'];
-    $specproduct = $_POST['specproduct'];
+        $brand = $_POST['brands'];
+        $nameproduct = $_POST['nameproduct'];
+        $specproduct = $_POST['specproduct'];
 
-    $promotion = $_POST['promotion'];
-    $category = $_POST['categorys'];
-    $xuatxu = $_POST['xuatxu'];
-    $material = $_POST['material'];
-    $lengthh = $_POST['lengthh'];
-    $color = $_POST['color'];
-    $desc = $_POST['xuatxu']. ", " . $_POST['material']. ", " . $_POST['lengthh']. ", " . $_POST['color'];
-    if (isset($_FILES['img1']) && $_FILES['img1']['error'] == UPLOAD_ERR_OK) {
-        $fileImg1 = $_FILES['img1']['name'];
-        $tempImg1 = $_FILES['img1']['tmp_name'];
-    }
-
-    if (!empty($fileImg1)) {
+        $promotion = $_POST['promotion'];
+        $category = $_POST['categorys'];
+        $xuatxu = $_POST['xuatxu'];
+        $material = $_POST['material'];
+        $lengthh = $_POST['lengthh'];
+        $color = $_POST['color'];
+        $desc = $_POST['xuatxu']. ", " . $_POST['material']. ", " . $_POST['lengthh']. ", " . $_POST['color'];
+        // path for move to save img
         $location = "C:/xampp/htdocs/Kumo/hinh_sp/";
-        if (!move_uploaded_file($tempImg1, $location . $fileImg1)) {
-            echo "<div class='error'>Upload không thành công</div>";
-            $isTrue = false;
+        if (isset($_FILES['img1']) && $_FILES['img1']['error'] == UPLOAD_ERR_OK) {
+            $fileImg1 = $_FILES['img1']['name'];
+            $tempImg1 = $_FILES['img1']['tmp_name'];
         }
-    }
 
-    if (isset($_FILES['img2']) && $_FILES['img2']['error'] == UPLOAD_ERR_OK) {
-        $fileImg2 = $_FILES['img2']['name'];
-        $tempImg2 = $_FILES['img2']['tmp_name'];
-    }
-
-    if (!empty($fileImg2)) {
-        $location = "C:/xampp/htdocs/Kumo/hinh_sp/";
-        if (!move_uploaded_file($tempImg2, $location . $fileImg2)) {
-            echo "<div class='error'>Upload không thành công</div>";
-            $isTrue = false;
+        if (!empty($fileImg1)) {
+            // $location = "C:/xampp/htdocs/Kumo/hinh_sp/";
+            if (!move_uploaded_file($tempImg1, $location . $fileImg1)) {
+                echo "<div class='error'>Upload không thành công</div>";
+                $isTrue = false;
+            }
         }
-    }
 
-    // if (isset($fileImg1, $fileImg2)) {
+        if (isset($_FILES['img2']) && $_FILES['img2']['error'] == UPLOAD_ERR_OK) {
+            $fileImg2 = $_FILES['img2']['name'];
+            $tempImg2 = $_FILES['img2']['tmp_name'];
+        }
+
+        if (!empty($fileImg2)) {
+            // $location = "C:/xampp/htdocs/Kumo/hinh_sp/";
+            if (!move_uploaded_file($tempImg2, $location . $fileImg2)) {
+                echo "<div class='error'>Upload không thành công</div>";
+                $isTrue = false;
+            }
+        }
+
+        // if (isset($fileImg1, $fileImg2)) {
         $images = "hinh_sp/" . $_FILES['img1']['name'] . "," . "hinh_sp/" . $_FILES['img2']['name'];
 
 
-    // if ($isTrue) {
-    $sql = "INSERT INTO product(`point`, `images`, `ratingStar`, `salePromotion`, `category`, `specName`, `name`, `describes`, `price`, `brand`) VALUES (5, '$images', 5, '$promotion', '$category', '$specproduct', '$nameproduct', '$desc', '$price', '$brand')";
+        // if ($isTrue) {
+        $sql = "INSERT INTO product(`point`, `images`, `ratingStar`, `salePromotion`, `category`, `specName`, `name`, `describes`, `price`, `brand`) VALUES (5, '$images', 5, '$promotion', '$category', '$specproduct', '$nameproduct', '$desc', '$price', '$brand')";
 
-    $all = "SELECT * FROM product";
-    $result = mysqli_query($conn, $all);
-    while ($r = mysqli_fetch_array($result)) {
-        if ($r['point'] == 0 && $r['images'] == $images && $r['ratingStat'] == 0 && $r['salePromotion'] == $promotion && $r['category'] == $category && $r['specName'] == $specproduct && $r['name'] == $nameproduct && $r['describes'] == $desc && $r['price'] == $price){
-            $isExits = true;
-        };
-    }
-    if ($isTrue) {
-        if ($isExits == true) {
-            echo "<script>alert('Dữ liệu đã có tồn tại.');</script>";
-        }else{
-            mysqli_query($conn, $sql);
-            echo "<script>alert('Thêm dữ liệu thành công.');</script>";
+        $queryAll = "SELECT * FROM product";
+        $result = mysqli_query($conn, $queryAll);
+        while ($r = mysqli_fetch_array($result)) {
+            if ($r['point'] == 0 && $r['images'] == $images && $r['ratingStat'] == 0 && $r['salePromotion'] == $promotion && $r['category'] == $category && $r['specName'] == $specproduct && $r['name'] == $nameproduct && $r['describes'] == $desc && $r['price'] == $price){
+                $isExits = true;
+            };
         }
-        echo "<script>location.href = 'admin_add_product.php';</script>";
+        if ($isTrue) {
+            if ($isExits == true) {
+                echo "<script>alert('Dữ liệu đã có tồn tại.');</script>";
+            }else{
+                mysqli_query($conn, $sql);
+                echo "<script>alert('Thêm dữ liệu thành công.');</script>";
+            }
+            echo "<script>location.href = 'admin_add_product.php';</script>";
 
-    } else {
-        echo "<script>alert('Thêm dữ liệu không thành công.');</script>";
-        echo "<script>location.href = 'admin_add_product.php';</script>";
-        echo error_get_last_error();
+        } else {
+            echo "<script>alert('Thêm dữ liệu không thành công.');</script>";
+            echo "<script>location.href = 'admin_add_product.php';</script>";
+            echo error_get_last_error();
+        }
     }
-}?>
+?>
 

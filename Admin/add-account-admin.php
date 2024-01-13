@@ -1,6 +1,6 @@
 <?php
 
-include "connectDB.php";
+require_once '../connectDB.php';
 session_start();
 if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
    $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
@@ -73,7 +73,7 @@ if(isset($_POST['submit'])){
    <title>register form admin</title>
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../css/style.css">
+   <link rel="stylesheet" href="../css/identified.css">
 
 </head>
 <body>

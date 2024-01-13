@@ -1,65 +1,86 @@
 <?php
 include "thuvien.php";
 include "connectDB.php";
+require "email/send_mail_cart.php";
 // Assuming $_POST['showcart'] contains the array
-session_start();
+// session_start();
 if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
     $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
     // echo $user_id;
     if (isset($_POST['showcart'])) {
         $showcart = $_POST['showcart'];
-        // $idbill = $_POST['idbill'];
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        $email = $_POST['email'];
-        $time = $_POST['time'];
-        // $totalTemp = $_POST['totalTemp'];
-        $orderCode = $_POST['orderCode'];
-        $note = isset($_POST['note']) ? $_POST['note'] : "Không có";
-        $totalTemp = 0;
-        if ($showcart) {
-            $totalTemp = tongdonhangbill($showcart);
-        }
-        // echo $totalTemp;
-        $totalpromotion = $_POST['totalpromotion'];
+        // var_dump($showcart);
 
-        $totalAmount = $totalTemp - $totalpromotion;
-        
-        $promotion = $_POST['promotion'];
+        if (!empty($showcart)) {
+            var_dump($showcart);
+        // }        
+            // $idbill = $_POST['idbill'];
+            $name = $_POST['name'];
+            $phone = $_POST['phone'];
+            $address = $_POST['address'];
+            $email = $_POST['email'];
+            $time = $_POST['time'];
+            // $totalTemp = $_POST['totalTemp'];
+            $orderCode = $_POST['orderCode'];
+            $note = isset($_POST['note']) ? $_POST['note'] : "Không có";
+            $totalTemp = 0;
+            if ($showcart) {
+                $totalTemp = tongdonhangbill($showcart);
+            }
+            // echo $totalTemp;
+            $totalpromotion = $_POST['totalpromotion'];
 
-        $isSave = $_POST['isSave'];
-        // echo $isSave;
-        // echo $isSave;
-        // echo $totalpromotion;
-        if (empty($isSave) || $isSave == "true") {
-            // $idbill = $_POST['idBill'];
-            $idbill = getLastOrderIdForUser($user_id);
+            $totalAmount = $totalTemp - $totalpromotion;
+            
+            $promotion = $_POST['promotion'];
+
+            $isSave = $_POST['isSave'];
+            // echo $isSave;
+            // echo $isSave;
+            // echo $totalpromotion;
+            if (empty($isSave) || $isSave == "true") {
+                // $idbill = $_POST['idBill'];
+                $idbill = getLastOrderIdForUser($user_id);
+                // echo $idbill;
+            } else {
+                $idbill = taodonhang($orderCode,$phone,$note,$address,$email,$totalAmount,$totalTemp,$promotion,$totalpromotion,$time,$name,$user_id);
+                // echo $idbill;
+
+            }
             // echo $idbill;
-        } else {
-            $idbill = taodonhang($orderCode,$phone,$note,$address,$email,$totalAmount,$totalTemp,$promotion,$totalpromotion,$time,$name,$user_id);
-            // echo $idbill;
-        }
-        // echo $idbill;
 
-        ?>
-        <!-- <script>
-            localStorage.setItem('idbill', <?php echo json_encode($idbill); ?>);
-        </script> -->
-        <?php
-        if ($showcart) {
-            foreach ($showcart as $item) {
-                $hinh = $item[0];
-                $price = $item[1];
-                $productName = $item[2];
-                $quantity = $item[3];
-                $size = $item[4];
-                $idsp = $item[5];
-                $thanhtien = floatval($price) * floatval($quantity);
-
-                if ($isSave == 1) {
-                    taogiohang($idbill,$productName,$price,$quantity,$size,$hinh);
+            // echo $name;
+            if ($showcart) {
+                $noidung = "<p>Cảm ơn quý khách đã đặt hàng</p>
+                        <p>Mã đơn hàng của bạn là: ".$idbill ."</p>
+                        <p>Tổng giá trị đơn hàng là: ".number_format($totalAmount, 0, ",", ".")."đ </p>
+                        <p>Đơn hàng bao gồm: </p>";
+                // $noidung = "";
+                foreach ($showcart as $item) {
+                    $hinh = $item[0];
+                    $price = $item[1];
+                    $productName = $item[2];
+                    $quantity = $item[3];
+                    $size = $item[4];
+                    $idsp = $item[5];
+                    $thanhtien = floatval($price) * floatval($quantity);
+                    
+                    if ($isSave == 1) {
+                        taogiohang($idbill,$productName,$price,$quantity,$size,$hinh);
+                        $noidung .= "<ul>
+                            <li>Tên sản phẩm: " . $productName . "</li>
+                            <li>Số lượng: " . $quantity . "</li>
+                            <li>Size: " . $size . "</li>
+                            <li>Giá: " . number_format($price, 0, ",", ".") . "đ</li>
+                            <li>Tổng: " . number_format($thanhtien, 0, ",", ".") . "đ</li>
+                        </ul>";
+                        // $noidung .= "<p style='margin-left: 20px;'>ahi</p>";
+                    }
                 };
+                
+                
+                $mail = new Mailer;
+                $mail -> dathangmail($email, $name, $noidung);
             }
         }
         if (isset($user_id)){
@@ -67,7 +88,6 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
             $result_orders = mysqli_query($conn, $sql_orders);
             if (mysqli_num_rows($result_orders) > 0) {
                 while ($row = mysqli_fetch_array($result_orders)) {
-                    if ($idbill != null){
                         $sql_orderitem = "SELECT product, images,size,quantity,price FROM orderitem WHERE orders = '" . $row['id'] . "'";
                         
                         // echo $sql_orderitem; exit;
@@ -95,7 +115,6 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
                                     </div>
                                 </div>';
                         }
-                    }
                     echo '</div>
                         </div>
                         <div class="layoutcolumn2">

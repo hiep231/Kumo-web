@@ -45,39 +45,39 @@
             <!-- <a href="#"><i class='bx bxs-heart'></i></a> -->
             <!-- <div class="bx bx-menu" id="menu-icon"></div> -->
             <?php if(isset($user_id)) { ?>
-            <div class="profile">
-                <a href="#"><i class='bx bx-user' id="user"></i></a>
-                <?php
-                
-                $select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
-                $select_profile->bind_param("s", $user_id);
-                $select_profile->execute();
-                $fetch_profile = $select_profile->get_result()->fetch_assoc();
-                
-                if ($fetch_profile) {
-                    ?>
-                    <div class="infoUser" id="infoUser" style="display:none;">
-                        <div class="img-user">
-                            <img src="avatar_img/<?= $fetch_profile['avatar']; ?>" alt="">
-                        </div>
-                        <p>Xin chào <?= $fetch_profile['userName']; ?></p>
-                        <a href="user_profile_update.php" class="btn">Cập nhật thông tin</a>
-                        <a href="logout.php" class="delete-btn">Đăng xuất</a>
-                        <a href="bill.php">Đơn hàng</a>
-                        <?php
-                            if (isset($_SESSION['admin_id'])) {
-                                ?>
-                                    <a href="Admin/admin_home.php">Admin</a>
-                                <?php
-                            }
+                <div class="profile">
+                    <a href="#"><i class='bx bx-user' id="user"></i></a>
+                    <?php
+                    
+                    $select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
+                    $select_profile->bind_param("s", $user_id);
+                    $select_profile->execute();
+                    $fetch_profile = $select_profile->get_result()->fetch_assoc();
+                    
+                    if ($fetch_profile) {
                         ?>
-                    </div>
-                <?php
-                }
-                ?>
-            </div>
-            <!-- <a href="#" onclick="showcart1()"><i class='bx bx-cart'></i></a> -->
-            <?php }else { ?>
+                        <div class="infoUser" id="infoUser" style="display:none;">
+                            <div class="img-user">
+                                <img src="avatar_img/<?= $fetch_profile['avatar']; ?>" alt="">
+                            </div>
+                            <p>Xin chào <?= $fetch_profile['userName']; ?></p>
+                            <a href="user_profile_update.php" class="btn">Cập nhật thông tin</a>
+                            <a href="logout.php" class="delete-btn">Đăng xuất</a>
+                            <a href="bill.php">Đơn hàng</a>
+                            <?php
+                                if (isset($_SESSION['admin_id'])) {
+                                    ?>
+                                        <a href="Admin/admin_home.php">Admin</a>
+                                    <?php
+                                }
+                            ?>
+                        </div>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <!-- <a href="#" onclick="showcart1()"><i class='bx bx-cart'></i></a> -->
+            <?php } else { ?>
                 <a href="#"><i class='bx bx-user' id="user"></i></a>
                 <div class="display-user-login" id="display-user-login">
                     <div>

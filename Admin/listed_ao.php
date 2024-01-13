@@ -7,7 +7,7 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 }
 include 'admin_leftside.php';
 $fileName = "listed_ao.php";
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 
 if (isset($_GET['page'])) {
     $page = $_GET['page'];

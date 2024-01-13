@@ -8,7 +8,7 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 
 // include 'add_product.html';
 include 'admin_leftside.php';
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 
 $sql = "SELECT category, AVG(price) AS 'TB', count(*) AS `COUNT` FROM `product` group by category";
 $result1 = mysqli_query($conn,$sql);
@@ -43,7 +43,7 @@ mysqli_close($conn);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="listed.css">
+    <link rel="stylesheet" href="../css/listed.css">
     <style>
         *{
             font-family: "Roboto","Helvetica Neue",Arial,sans-serif;

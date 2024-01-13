@@ -2,15 +2,13 @@
     session_start();
     include 'connectDB.php';
     include 'model_cart.php';
-    include 'header.php';
     include 'thuvien.php';
     if (!isset($_SESSION['user_id']) && !isset($_SESSION['admin_id'])) {
         header('location:login_form.php');
         exit;
         // echo "login";
-    }else{
-        $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
-    }
+    };
+    $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
 
 ?>
 <!DOCTYPE html>
@@ -19,7 +17,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Clothes Shopping</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,7 +89,7 @@
 
     <?php 
     include 'footer.php'; 
-    // include 'header.php';
+    include 'header.php';
     ?>
 
     <script type="text/javascript">
@@ -200,7 +198,7 @@
 
             cartElement.innerHTML = `
             <p><i class='bx bx-map-alt'></i> Thông tin đơn hàng</p>                    
-            <form action="bill.php" method="POST">
+            <form action="bill.php" method="post">
                 <div class="form-cart">
                     <select name="promotion" required> 
                         <?php

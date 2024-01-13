@@ -3,7 +3,7 @@
 // $spid = $_GET['sid'];
 // echo $spid;
 
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 if (isset($_GET['productid'])) {
     $spid = $_GET['productid'];
     $xoa_product = "DELETE FROM product WHERE id=$spid";

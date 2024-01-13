@@ -1,23 +1,23 @@
 <?php 
-$nth = 6;
-$content = "Quản lí đơn hàng";
-session_start();
-if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
-    $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
-}
-include 'admin_leftside.php';
-$fileName = "order.php";
-require_once 'connectDB.php';
+    $nth = 6;
+    $content = "Quản lí đơn hàng";
+    session_start();
+    if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
+        $user_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : $_SESSION['user_id'];
+    }
+    include 'admin_leftside.php';
+    $fileName = "order.php";
+    require_once '../connectDB.php';
 
-if (isset($_GET['page'])) {
-    $page = $_GET['page'];
-} else {
-    $page = 1;
-}
-// Check for a database connection error
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+    if (isset($_GET['page'])) {
+        $page = $_GET['page'];
+    } else {
+        $page = 1;
+    }
+    // Check for a database connection error
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
 ?>
 
 <!DOCTYPE html>
@@ -26,10 +26,9 @@ if (!$conn) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Clothes Shopping</title>
-    <!-- Use correct Bootstrap URLs -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="listed.css">
+    <link rel="stylesheet" href="../css/listed.css">
     <style>
         .page-<?php echo $page ?> {
             background: #6fcb6c;
@@ -39,7 +38,7 @@ if (!$conn) {
 </head>
 <body>
     <div class="rightside">
-        <div class="container mt-3">  <!-- class="container" -->
+        <div class="container mt-3">
             <form  id="searchForm" method="post" action="listed_order.php">
                 <input type="text" name="search" id="searchInput" value="<?php echo isset($_POST["search"]) ? $_POST["search"] : ''; ?>" placeholder="Sản phẩm">
                 <button type="submit" name="submit" onclick="submitForm()" class="search btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="20" viewBox="0 0 24 24" style="position: relative;bottom:2px;"><path fill="#00000" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5q0-2.725 1.888-4.612T9.5 3q2.725 0 4.612 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3l-1.4 1.4ZM9.5 14q1.875 0 3.188-1.313T14 9.5q0-1.875-1.313-3.188T9.5 5Q7.625 5 6.312 6.313T5 9.5q0 1.875 1.313 3.188T9.5 14Z"/></svg></button>
@@ -152,20 +151,9 @@ if (!$conn) {
                                 <td><?php echo $r['time'] ?></td>
                                 <td class="icon-operation" style="width:10%;">
                                     <span>
-                                        <!-- <a href="listed_order.php?id=<?php echo $r['id'];?>" class="btn btn-outline-info"> -->
                                         <a href="listed_order.php?id=<?php echo $r['id'];?>" class="btn view btn-outline-info" onclick="toggleDetailOrder(<?php echo $r['id']; ?>)">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5s5 2.24 5 5s-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3s3-1.34 3-3s-1.34-3-3-3z"/></svg>
-                                             
                                         </a>
-                                        <!-- <a class="btn btn-outline-success">
-                                            <svg xmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"><path fill="currentColor" d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"/></svg>
-                                            <div class="bnt-status">
-                                                <button class="btn btn-success">Đã xử lí</button>
-                                                <button class="btn btn-danger">Đang xử lí</button>
-                                                <button class="btn btn-danger">Đã giao thành công</button>
-                                            </div>
-                                        </a> -->
-                                        <!-- <a onclick="return confirm('Bạn có muốn xóa đơn hàng này không.')" href="delete_product.php?sid=<?php echo $r['id'];?>" class="btn btn-outline-danger"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg></a> -->
                                     </span>
                                 </td>
                             </tr>
@@ -240,7 +228,6 @@ if (!$conn) {
                 <tbody>
                     <?php
                         $id = $_GET['id'];
-                        // echo $r['id'];
                         $detailOrder_sql = "
                         SELECT  product, price, quantity, size, images FROM orderitem  WHERE orders = ?";
                         $stmt = mysqli_prepare($conn, $detailOrder_sql);
@@ -251,9 +238,7 @@ if (!$conn) {
                         $indexOderitem = 1;
                         while ($r = mysqli_fetch_array($resultOderitem)) {
                             $image = $r['images'];
-                            // echo $image;
-                            // $array_describes = explode(",", $r['describes']);
-                            // $color = $array_describes[3]
+
 
                             ?>
                             <tr>
@@ -292,45 +277,6 @@ if (!$conn) {
         var currentPage = <?php echo $page; ?>;
         var totalPages = <?php echo $totalPages; ?>;
         
-        // function prevPage() {
-        //     if (currentPage > 1) {
-        //         currentPage--;
-        //         changePage(currentPage);
-        //     }
-        // }
-
-        // function nextPage() {
-        //     if (currentPage < totalPages) {
-        //         currentPage++;
-        //         changePage(currentPage);
-        //     }
-        // }
-
-        // function changePage(page) {
-        //     // Chuyển đến trang mới bằng cách cập nhật URL
-        //     window.location.href = 'order.php?page=' + page;
-        // }
-
-        // if (currentPage===totalPages) {
-        //     var nextPageElement = document.getElementById("nextPage");
-        //     if (nextPageElement) {
-        //         nextPageElement.style.backgroundColor = "#b7bab6";
-        //     }
-        // }
-        // if (currentPage === 1) {
-        //     var prevPageElement = document.getElementById("prevPage");
-        //     if (prevPageElement) {
-        //         prevPageElement.style.backgroundColor = "#b7bab6";
-        //     }
-        // }
-        
-        // function updateStatus(orderId) {
-        //     var currentStatus = document.getElementById('status_' + orderId).innerText.trim();
-        //     var result = confirm('Bạn có chắc chắn muốn thay đổi trạng thái không?');
-        //     if (result) {
-        //         window.location.href = 'update_status.php?orderId=' + orderId;
-        //     }
-        // }
         function changeButtonText(element) {
             var buttonText = element.innerText;
             document.getElementById('dropdownBtn').innerText = buttonText;
@@ -347,12 +293,9 @@ if (!$conn) {
             // Gửi dữ liệu
             xhr.send('dropdownContent=' + encodeURIComponent(dropdownContent) + '&id=' + encodeURIComponent(id));
 
-            // Xử lý phản hồi từ máy chủ (nếu cần)
             xhr.onreadystatechange = function() {
                 if (xhr.readyState == 4 && xhr.status == 200) {
-                    console.log(xhr.responseText); // In ra console nếu cần
-                    // Xử lý phản hồi từ máy chủ nếu cần
-                    // header('location: listed_order.php');
+                    console.log(xhr.responseText);
                 }
             };
         }

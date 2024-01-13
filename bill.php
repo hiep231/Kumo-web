@@ -29,7 +29,7 @@
     $orderCode = null;
 
     if(isset($_POST['dongydathang'])&&($_POST['dongydathang'])) {
-        if (!isset($_SESSION['order_created']) || $_SESSION['order_created'] !== true) {
+        // if (!isset($_SESSION['order_created']) || $_SESSION['order_created'] !== true) {
             $isSave = true;
             $isTrue = true;
             $name = $_POST['ten'];
@@ -51,11 +51,12 @@
             $note = isset($_POST['customer_note']) ? $_POST['customer_note'] : "";
 
             $orderCode = "ORD" . rand(10000, 99999);
-            $_SESSION['order_created'] = true;
-        }
-    } else {
-        unset($_SESSION['order_created']);
+        //     $_SESSION['order_created'] = true;
+        // }
     }
+    //  else {
+    //     unset($_SESSION['order_created']);
+    // }
     // }
     echo '<script>
             let name = "' . $name . '";
@@ -76,7 +77,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fashion Clothes Shopping</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -92,11 +93,6 @@
     <p>Để lại một tin nhắn, chúng tôi rất vui được nghe từ bạn!</p>
 </section>
 <div class="giohang"></div>
-
-    
-    
-
-    
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
     function Time() {
@@ -149,8 +145,10 @@
 
 </script>
     <?php 
-    include 'footer.php'; 
-    include 'header.php';
+        include 'footer.php'; 
+        include 'header.php';
     ?>
 </body>
 </html>
+
+

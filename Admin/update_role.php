@@ -1,5 +1,5 @@
 <?php
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 
 // if (isset($_GET['orderId'])) {
 //     $orderId = $_GET['orderId'];

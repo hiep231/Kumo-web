@@ -6,7 +6,7 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 }
 
 
-require_once 'connectDB.php';
+require_once '../connectDB.php';
 
 $id = $_GET['sid'];
 $edit_sql = "SELECT * FROM product WHERE id='$id'";
