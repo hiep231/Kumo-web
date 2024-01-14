@@ -41,9 +41,9 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
 
     <!-- trending-products-section -->
     <section class="trending-product" id="trending">
-        <!-- <div class="center-text">
-            <h2>Sản phẩm <span>Nổi bật</span></h2>
-        </div> -->
+        <div class="center-text">
+            <h2><span>Sản phẩm Nổi bật</span></h2>
+        </div>
         <div class="products">
             <?php
                 // $sql = "SELECT * FROM product LIMIT 80";

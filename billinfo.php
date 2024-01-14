@@ -12,9 +12,6 @@ if (isset($_SESSION['user_id']) || isset($_SESSION['admin_id'])) {
         // var_dump($showcart);
 
         if (!empty($showcart)) {
-            var_dump($showcart);
-        // }        
-            // $idbill = $_POST['idbill'];
             $name = $_POST['name'];
             $phone = $_POST['phone'];
             $address = $_POST['address'];
