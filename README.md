@@ -32,10 +32,10 @@ Open your web browser and navigate to http://localhost/Kumo/home.php.
 ##### Usage
 Explore a variety of products for men, add them to your cart, and enjoy a secure and convenient shopping experience.
 
-#Description
+# Description
 Project web1: Wesite Sales
 
-#Preview Client
+# Preview Client
 
 ![fd837823-3275-413e-9674-f3746e00e565](https://github.com/hiep231/Kumo-web/assets/129245041/95c6e299-5304-4330-b5d0-cfa5064f6ce1)
 
@@ -47,7 +47,7 @@ Project web1: Wesite Sales
 
 ![2c15801b-a9b4-41c0-aa9e-483aa7389334](https://github.com/hiep231/Kumo-web/assets/129245041/2f14feb9-f91c-4bb5-97ce-157e1dbac3de)
 
-#Preview Admin
+# Preview Admin
 ![b15d932b-9c65-4592-8235-dd29ad29f2dc](https://github.com/hiep231/Kumo-web/assets/129245041/a3d1a758-0fa3-427c-9dc3-f9bb3d9e2cd8)
 
 ![c15a8707-edd5-4df0-b010-5ab717dfe82b](https://github.com/hiep231/Kumo-web/assets/129245041/58bc55f5-1c85-440e-b933-0f3fb75136a7)
